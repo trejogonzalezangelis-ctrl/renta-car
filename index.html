@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Motors Elite Corp. | E-Commerce & Alquiler de Vehículos</title>
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome 6.5.1 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- html2pdf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #070a0f;
+      --bg-card: #0d121c;
+      --accent-cyan: #00d2ff;
+      --accent-gold: #ffd700;
+      --accent-orange: #ff9800;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    .glass-nav {
+      background: rgba(13, 18, 28, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+    }
+    .hero-banner {
+      background: linear-gradient(rgba(7, 10, 15, 0.7), rgba(7, 10, 15, 0.9)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      padding: 90px 0;
+      border-bottom: 2px solid rgba(0, 210, 255, 0.3);
+      text-align: center;
+    }
+    .card-luxury {
+      background-color: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      height: 100%;
+    }
+    .card-luxury:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
+    }
+    .card-img-wrapper {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .card-luxury:hover .card-img-wrapper img {
+      transform: scale(1.08);
+    }
+    .badge-offer {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #ff9800, #ff5722);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+    .price-sale {
+      color: var(--accent-gold);
+      font-weight: 800;
+      font-size: 1.35rem;
+    }
+    .price-rent {
+      color: var(--accent-orange);
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .floating-cart-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1050;
+      background: linear-gradient(135deg, #00d2ff, #007bb5);
+      color: #fff;
+      border: none;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+    .floating-cart-btn:hover {
+      transform: scale(1.1) rotate(8deg);
+    }
+    /* Estilos de Footer personalizados */
+    footer {
+      background: linear-gradient(135deg, #0a0a0a, #1c1c1c);
+      color: #fff;
+      padding: 50px 0 30px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+    }
+    footer img.footer-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      margin-bottom: 20px;
+      object-fit: cover;
+      transition: transform 0.3s;
+      box-shadow: 0 5px 20px rgba(0, 210, 255, 0.3);
+    }
+    footer img.footer-avatar:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-cyan);
+    }
+    footer h4 {
+      font-weight: 800;
+      color: var(--accent-cyan);
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    footer p.bio {
+      font-size: 16px;
+      color: #ddd;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .tech-stack {
+      display: inline-block;
+      background: rgba(0, 191, 255, 0.1);
+      color: #00bfff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 13px;
+      margin: 4px;
+      border: 1px solid rgba(0, 191, 255, 0.3);
+    }
+    .social-icons-footer { margin: 25px 0; }
+    .social-icons-footer a {
+      color: #fff;
+      font-size: 28px;
+      margin: 0 15px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .social-icons-footer a:hover {
+      color: var(--accent-cyan);
+      transform: translateY(-5px) scale(1.1);
+    }
+    .btn-youtube {
+      background: linear-gradient(90deg, #ff0000, #cc0000);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+    }
+    .btn-youtube:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Fijo (Glassmorphism) -->
+  <nav class="navbar navbar-expand-lg navbar-dark glass-nav sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <i class="fa-solid fa-car-rear text-info fs-3"></i>
+        <span class="fw-bold fs-4 text-white">LUXURY MOTORS <span class="text-info">ELITE</span></span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <input type="text" id="searchInput" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Buscar vehículo o moto..." style="width: 220px;">
+        <div class="btn-group" role="group">
+          <button class="btn btn-outline-info btn-sm active" onclick="filterCategory('todos', this)">Todos</button>
+          <button class="btn btn-outline-info btn-sm" onclick="filterCategory('vehiculos', this)">Autos</button>
+          <button class="btn btn-outline-info btn-sm" onclick="filterCategory('motos', this)">Motos</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="hero-banner">
+    <div class="container">
+      <h1 class="display-4 fw-bold text-white mb-3">CATÁLOGO PREMIUM DE ALTA GAMA</h1>
+      <p class="lead text-light mb-0">Adquisición directa y flota de alquiler ejecutiva con contratos y facturación automatizada.</p>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal del Catálogo -->
+  <main class="container my-5">
+    <div id="catalogGrid" class="row g-4">
+      <!-- Inyectado dinámicamente mediante JS -->
+    </div>
+  </main>
+
+  <!-- Botón Flotante del Carrito -->
+  <button class="floating-cart-btn" onclick="openCartModal()" title="Ver Carrito">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">0</span>
+  </button>
+
+  <!-- Modal de Alquiler -->
+  <div class="modal fade" id="rentalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title text-info"><i class="fa-solid fa-key me-2"></i> Configurar Alquiler de Unidad</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="rentalVehicleCode">
+          <div class="text-center mb-3">
+            <img id="rentalModalImg" src="" class="img-fluid rounded border border-secondary" style="max-height: 180px; object-fit: cover; width: 100%;">
+            <h5 id="rentalModalTitle" class="mt-2 fw-bold text-warning"></h5>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Modalidad de Alquiler:</label>
+            <select id="rentalModeSelect" class="form-select bg-dark text-white border-secondary" onchange="calculateRentalSubtotal()">
+              <option value="dia">Por Día(s) (24h)</option>
+              <option value="hora">Por Hora(s)</option>
+            </select>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label">Cantidad:</label>
+              <input type="number" id="rentalDurationInput" class="form-control bg-dark text-white border-secondary" value="3" min="1" oninput="calculateRentalSubtotal()">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Fecha de Inicio:</label>
+              <input type="date" id="rentalStartDate" class="form-control bg-dark text-white border-secondary" value="2026-10-27">
+            </div>
+          </div>
+          <div class="p-3 bg-secondary bg-opacity-10 rounded border border-secondary mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span>Tarifa Aplicada:</span>
+              <strong id="rentalUnitRateText" class="text-warning">$0.00</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span>Depósito de Fianza Reembolsable:</span>
+              <strong class="text-info">$500.00 USD</strong>
+            </div>
+            <hr class="border-secondary my-2">
+            <div class="d-flex justify-content-between fs-5">
+              <span class="fw-bold">Subtotal Alquiler:</span>
+              <span id="rentalSubtotalText" class="fw-bold text-success">$0.00</span>
+            </div>
+          </div>
+          <p class="small text-muted mb-0"><i class="fa-solid fa-shield-halved text-info me-1"></i> Incluye póliza Platinum, tanque lleno 100% y emisión automática de Contrato Legal con firmas.</p>
+        </div>
+        <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-warning fw-bold" onclick="confirmRentalToCart()">Confirmar y Agregar al Carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal del Carrito y Checkout VIP -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title text-info"><i class="fa-solid fa-file-invoice-dollar me-2"></i> Carrito & Pasarela de Pago VIP</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div id="cartItemsList" class="mb-4">
+            <!-- Listado de ítems del carrito -->
+          </div>
+
+          <hr class="border-secondary">
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="text-warning m-0"><i class="fa-solid fa-id-card me-2"></i> Datos de Facturación y Pago Pre-cargados</h6>
+            <button class="btn btn-outline-info btn-sm" onclick="fillDefaultDemoData()"><i class="fa-solid fa-bolt me-1"></i> ⚡ Rellenar Datos Ficticios (Demo VIP)</button>
+          </div>
+
+          <form id="checkoutForm" class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small">Nombre y Apellidos</label>
+              <input type="text" id="clientName" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Documento / Cédula</label>
+              <input type="text" id="clientId" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Licencia de Conducir</label>
+              <input type="text" id="clientLicense" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Teléfono</label>
+              <input type="text" id="clientPhone" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Correo Electrónico</label>
+              <input type="email" id="clientEmail" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Dirección de Entrega</label>
+              <input type="text" id="clientAddress" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Número de Tarjeta Simulada</label>
+              <input type="text" id="cardNum" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-3">
+              <label class="form-label small">Vencimiento</label>
+              <input type="text" id="cardExp" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+            <div class="col-3">
+              <label class="form-label small">CVV</label>
+              <input type="text" id="cardCvv" class="form-control form-control-sm bg-dark text-white border-secondary" required>
+            </div>
+          </form>
+
+          <div class="p-3 bg-secondary bg-opacity-10 rounded border border-secondary mt-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span>Subtotal:</span>
+              <span id="cartSubtotal">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span>Depósito de Fianza Acumulado:</span>
+              <span id="cartDeposit">$0.00</span>
+            </div>
+            <hr class="border-secondary my-2">
+            <div class="d-flex justify-content-between fs-5 fw-bold text-success">
+              <span>TOTAL A PAGAR:</span>
+              <span id="cartTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearCart()">Vaciar Carrito</button>
+          <button type="button" class="btn btn-success fw-bold px-4" onclick="processCheckoutAndPdf()"><i class="fa-solid fa-file-pdf me-2"></i> Procesar Pago & Generar Documento PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Maestro con Avatar de Coche y Datos de Angelis Trejo -->
+  <footer>
+    <div class="container">
+      <img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=400&q=80" class="footer-avatar" alt="Supercar Avatar">
+      <h4>Angelis Trejo</h4>
+      <p class="bio">
+        <span class="text-info fw-bold">Desarrolladora Full Stack</span>, 
+        <span class="text-success fw-bold">Diseñadora de Experiencias Digitales</span> y <span class="text-warning fw-bold">Creadora Multimedia</span>. 
+        Apasionada por la innovación tecnológica, el desarrollo de aplicaciones web de alto rendimiento y la creación de contenido digital interactivo.<br>
+        💡 Especialista en arquitectura frontend moderna, soluciones e-commerce exclusivas y plataformas interactivas de nueva generación.
+      </p>
+
+      <div class="mb-4">
+        <span class="tech-stack"><i class="fab fa-html5" style="color: #e34f26;"></i> HTML5</span>
+        <span class="tech-stack"><i class="fab fa-css3-alt" style="color: #1572b6;"></i> CSS3</span>
+        <span class="tech-stack"><i class="fab fa-js" style="color: #f7df1e;"></i> JavaScript</span>
+        <span class="tech-stack"><i class="fab fa-bootstrap" style="color: #7952b3;"></i> Bootstrap 5</span>
+        <span class="tech-stack"><i class="fas fa-code"></i> SPA Architecture</span>
+      </div>
+
+      <div class="social-icons-footer">
+        <a href="https://www.youtube.com/@angel-_-jesus6055" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://github.com/trejogonzalezangelis-ctrl" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+
+      <button class="btn-youtube" onclick="window.open('https://www.youtube.com/@angel-_-jesus6055','_blank')">
+        🎥 Suscríbete a mi canal de YouTube
+      </button>
+
+      <hr class="my-4" style="border-color:#333;">
+      <p class="mb-0 text-muted" style="font-size: 14px;">© 2026 Catálogo de Vehículos Premium | Arquitectura por <span class="text-white fw-bold">Angelis Trejo</span></p>
+    </div>
+  </footer>
+
+  <!-- Lógica de la Aplicación en JavaScript -->
+  <script>
+    // Base de datos integrada con fotos reales en alta resolución (Unsplash) y miniaturas Base64/SVG de respaldo
+    const vehiculosData = {
+      vehiculos: [
+        {
+          codigo: 101,
+          marca: "FERRARI",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Deportivo",
+          modelo: "SF90 Stradale Assetto Corsa",
+          caracteristicas: "Motor V8 Twin-Turbo Plug-in Hybrid, 1000 HP, 0-100 km/h en 2.5s",
+          imagen: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 2,
+          motor: "4.0L V8 Turbo + 3 Motores Eléctricos",
+          combustible: "Híbrido Enchufable",
+          categoria: "vehiculos",
+          precio_compra: 590000,
+          precio_venta: 590000,
+          precio_alquiler_hora: 450,
+          precio_alquiler_dia: 3200,
+          oferta_alquiler: "🔥 15% Desc. Alquiler Semanal VIP",
+          existencia: 2
+        },
+        {
+          codigo: 102,
+          marca: "LAMBORGHINI",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Superdeportivo",
+          modelo: "Revuelto V12 Hybrid",
+          caracteristicas: "Motor V12 Atmosférico + Tracción Total Eléctrica, 1015 HP",
+          imagen: "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 2,
+          motor: "6.5L V12 + 3 Motores Eléctricos",
+          combustible: "Híbrido High Performance",
+          categoria: "vehiculos",
+          precio_compra: 650000,
+          precio_venta: 650000,
+          precio_alquiler_hora: 500,
+          precio_alquiler_dia: 3500,
+          oferta_alquiler: "⭐ Tanque Lleno de Cortesía",
+          existencia: 1
+        },
+        {
+          codigo: 103,
+          marca: "PORSCHE",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Deportivo de Pista",
+          modelo: "911 GT3 RS (992)",
+          caracteristicas: "Aerodinámica activa DRS, Motor Bóxer 4.0L Atmosférico 525 HP",
+          imagen: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 2,
+          motor: "4.0L 6 Cilindros Bóxer",
+          combustible: "Gasolina Premium 98",
+          categoria: "vehiculos",
+          precio_compra: 345000,
+          precio_venta: 345000,
+          precio_alquiler_hora: 280,
+          precio_alquiler_dia: 1950,
+          oferta_alquiler: "🏁 Incluye Pase a Track Day",
+          existencia: 3
+        },
+        {
+          codigo: 104,
+          marca: "ROLLS-ROYCE",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Sedán de Lujo",
+          modelo: "Phantom Series II",
+          caracteristicas: "Suspensión Planar de alfombra mágica, Silencio absoluto",
+          imagen: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 4,
+          motor: "6.75L V12 Twin-Turbo",
+          combustible: "Gasolina Premium",
+          categoria: "vehiculos",
+          precio_compra: 460000,
+          precio_venta: 460000,
+          precio_alquiler_hora: 350,
+          precio_alquiler_dia: 2500,
+          oferta_alquiler: "🍾 Conductor Privado Incluido 24h",
+          existencia: 2
+        }
+      ],
+      motos: [
+        {
+          codigo: 201,
+          marca: "DUCATI",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Superbike",
+          modelo: "Panigale V4 R",
+          caracteristicas: "Derivada de MotoGP, 240.5 HP con kit de carreras, Embrague seco",
+          imagen: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 0,
+          motor: "998cc Desmosedici Stradale R",
+          combustible: "Gasolina Racing 102 Octanos",
+          categoria: "motos",
+          precio_compra: 45000,
+          precio_venta: 45000,
+          precio_alquiler_hora: 95,
+          precio_alquiler_dia: 750,
+          oferta_alquiler: "⚡ Casco Arai Replica de Regalo",
+          existencia: 4
+        },
+        {
+          codigo: 202,
+          marca: "BMW MOTORRAD",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          tipo: "Maxi Naked",
+          modelo: "M 1000 R",
+          caracteristicas: "Alas aerodinámicas M, Llantas de carbono, 210 HP de pura potencia",
+          imagen: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
+          numeroPuertas: 0,
+          motor: "999cc 4 cilindros con ShiftCam",
+          combustible: "Gasolina Premium",
+          categoria: "motos",
+          precio_compra: 38000,
+          precio_venta: 38000,
+          precio_alquiler_hora: 80,
+          precio_alquiler_dia: 620,
+          oferta_alquiler: "🛡️ Seguro Total Anticaídas 0% Deducible",
+          existencia: 3
+        }
+      ]
+    };
+
+    let cart = [];
+    let currentCatalog = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadCatalog();
+      fillDefaultDemoData();
+      document.getElementById("searchInput").addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = currentCatalog.filter(item => 
+          item.marca.toLowerCase().includes(query) || 
+          item.modelo.toLowerCase().includes(query) ||
+          item.tipo.toLowerCase().includes(query)
+        );
+        renderCatalog(filtered);
+      });
+    });
+
+    function loadCatalog() {
+      currentCatalog = [...vehiculosData.vehiculos, ...vehiculosData.motos];
+      renderCatalog(currentCatalog);
+    }
+
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.btn-group button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if(cat === 'todos') {
+        currentCatalog = [...vehiculosData.vehiculos, ...vehiculosData.motos];
+      } else {
+        currentCatalog = vehiculosData[cat] || [];
+      }
+      renderCatalog(currentCatalog);
+    }
+
+    function renderCatalog(items) {
+      const grid = document.getElementById("catalogGrid");
+      grid.innerHTML = "";
+      if(items.length === 0) {
+        grid.innerHTML = `<div class="col-12 text-center py-5"><h4 class="text-muted">No se encontraron unidades disponibles.</h4></div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        grid.innerHTML += `
+          <div class="col-xl-4 col-md-6">
+            <div class="card card-luxury">
+              <div class="card-img-wrapper">
+                <span class="badge-offer">${item.oferta_alquiler}</span>
+                <img src="${item.imagen}" alt="${item.modelo}">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="badge bg-secondary text-uppercase">${item.marca}</span>
+                  <small class="text-muted">CÓD: ${item.codigo}</small>
+                </div>
+                <h5 class="card-title fw-bold text-white mb-2">${item.modelo}</h5>
+                <p class="card-text text-muted small mb-3 flex-grow-1">${item.caracteristicas}</p>
+                
+                <div class="mb-3 d-flex flex-wrap gap-1">
+                  <span class="badge bg-dark border border-secondary text-info"><i class="fa-solid fa-gauge-high me-1"></i>${item.motor}</span>
+                  <span class="badge bg-dark border border-secondary text-light"><i class="fa-solid fa-gas-pump me-1"></i>${item.combustible}</span>
+                  <span class="badge bg-dark border border-secondary text-success"><i class="fa-solid fa-boxes-stacked me-1"></i>Stock: ${item.existencia}</span>
+                </div>
+
+                <div class="mb-3 p-2 bg-black bg-opacity-25 rounded border border-secondary">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="small text-muted">Precio Venta Definitiva:</span>
+                    <span class="price-sale">$${item.precio_venta.toLocaleString()} USD</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="small text-muted">Tarifa Alquiler Renta:</span>
+                    <span class="price-rent">$${item.precio_alquiler_dia.toLocaleString()} <small>/día</small> <span class="text-muted fs-7">($${item.precio_alquiler_hora}/h)</span></span>
+                  </div>
+                </div>
+
+                <div class="row g-2">
+                  <div class="col-6">
+                    <button class="btn btn-warning w-100 fw-bold btn-sm" onclick="openRentalModal(${item.codigo})">
+                      <i class="fa-solid fa-key me-1"></i> Alquilar
+                    </button>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-outline-info w-100 fw-bold btn-sm" onclick="buyVehicle(${item.codigo})">
+                      <i class="fa-solid fa-cart-shopping me-1"></i> Comprar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function findVehicle(code) {
+      return [...vehiculosData.vehiculos, ...vehiculosData.motos].find(i => i.codigo === code);
+    }
+
+    function buyVehicle(code) {
+      const item = findVehicle(code);
+      if(!item) return;
+      cart.push({
+        tipoItem: 'VENTA',
+        codigo: item.codigo,
+        marca: item.marca,
+        modelo: item.modelo,
+        imagen: item.imagen,
+        precioUnitario: item.precio_venta,
+        cantidad: 1,
+        subtotal: item.precio_venta,
+        depositoFianza: 0
+      });
+      updateCartBadge();
+      Swal.fire({
+        icon: 'success',
+        title: '¡Vehículo Agregado para Compra!',
+        text: `${item.marca} ${item.modelo} añadido al carrito con éxito.`,
+        timer: 1800,
+        showConfirmButton: false,
+        background: '#0d121c',
+        color: '#fff'
+      });
+    }
+
+    function openRentalModal(code) {
+      const item = findVehicle(code);
+      if(!item) return;
+      document.getElementById("rentalVehicleCode").value = item.codigo;
+      document.getElementById("rentalModalImg").src = item.imagen;
+      document.getElementById("rentalModalTitle").innerText = `${item.marca} ${item.modelo}`;
+      document.getElementById("rentalModeSelect").value = "dia";
+      document.getElementById("rentalDurationInput").value = 3;
+      document.getElementById("rentalUnitRateText").dataset.rateDay = item.precio_alquiler_dia;
+      document.getElementById("rentalUnitRateText").dataset.rateHour = item.precio_alquiler_hora;
+      calculateRentalSubtotal();
+      new bootstrap.Modal(document.getElementById("rentalModal")).show();
+    }
+
+    function calculateRentalSubtotal() {
+      const mode = document.getElementById("rentalModeSelect").value;
+      const duration = parseInt(document.getElementById("rentalDurationInput").value) || 1;
+      const rateDay = parseFloat(document.getElementById("rentalUnitRateText").dataset.rateDay);
+      const rateHour = parseFloat(document.getElementById("rentalUnitRateText").dataset.rateHour);
+      const unitRate = mode === 'dia' ? rateDay : rateHour;
+      document.getElementById("rentalUnitRateText").innerText = `$${unitRate.toLocaleString()} USD / ${mode}`;
+      const subtotal = unitRate * duration;
+      document.getElementById("rentalSubtotalText").innerText = `$${subtotal.toLocaleString()} USD`;
+    }
+
+    function confirmRentalToCart() {
+      const code = parseInt(document.getElementById("rentalVehicleCode").value);
+      const item = findVehicle(code);
+      const mode = document.getElementById("rentalModeSelect").value;
+      const duration = parseInt(document.getElementById("rentalDurationInput").value) || 1;
+      const startDate = document.getElementById("rentalStartDate").value;
+      const rate = mode === 'dia' ? item.precio_alquiler_dia : item.precio_alquiler_hora;
+      const subtotal = rate * duration;
+      const deposit = 500; // Depósito obligatorio
+
+      cart.push({
+        tipoItem: 'ALQUILER',
+        codigo: item.codigo,
+        marca: item.marca,
+        modelo: item.modelo,
+        imagen: item.imagen,
+        modalidad: mode,
+        duracion: duration,
+        fechaInicio: startDate,
+        precioUnitario: rate,
+        cantidad: duration,
+        subtotal: subtotal,
+        depositoFianza: deposit
+      });
+
+      bootstrap.Modal.getInstance(document.getElementById("rentalModal")).hide();
+      updateCartBadge();
+      Swal.fire({
+        icon: 'success',
+        title: '¡Contrato de Alquiler Añadido!',
+        text: `Alquiler de ${item.modelo} por ${duration} ${mode}(s) agregado al carrito.`,
+        timer: 1800,
+        showConfirmButton: false,
+        background: '#0d121c',
+        color: '#fff'
+      });
+    }
+
+    function updateCartBadge() {
+      document.getElementById("cartBadge").innerText = cart.length;
+    }
+
+    function openCartModal() {
+      renderCartItems();
+      new bootstrap.Modal(document.getElementById("cartModal")).show();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById("cartItemsList");
+      if(cart.length === 0) {
+        container.innerHTML = `<p class="text-muted text-center my-3">Su carrito se encuentra vacío actualmente.</p>`;
+        document.getElementById("cartSubtotal").innerText = "$0.00";
+        document.getElementById("cartDeposit").innerText = "$0.00";
+        document.getElementById("cartTotal").innerText = "$0.00";
+        return;
+      }
+
+      let html = `<div class="table-responsive"><table class="table table-dark table-sm align-middle"><thead><tr><th>Unidad</th><th>Tipo</th><th>Detalle / Plazo</th><th>Subtotal</th><th>Acción</th></tr></thead><tbody>`;
+      let subtotalGeneral = 0;
+      let depositGeneral = 0;
+
+      cart.forEach((item, index) => {
+        subtotalGeneral += item.subtotal;
+        depositGeneral += item.depositoFianza || 0;
+        let detalleText = item.tipoItem === 'VENTA' ? 'Adquisición Definitiva' : `Alquiler: ${item.duracion} ${item.modalidad}(s) (Desde ${item.fechaInicio})`;
+        html += `
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <img src="${item.imagen}" style="width: 50px; height: 35px; object-fit: cover;" class="rounded">
+                <div><strong class="text-white">${item.modelo}</strong><br><small class="text-muted">${item.marca}</small></div>
+              </div>
+            </td>
+            <td><span class="badge ${item.tipoItem === 'VENTA' ? 'bg-success' : 'bg-info text-dark'}">${item.tipoItem}</span></td>
+            <td><small class="text-light">${detalleText}</small></td>
+            <td class="text-warning fw-bold">$${item.subtotal.toLocaleString()} USD</td>
+            <td><button class="btn btn-outline-danger btn-sm py-0 px-1" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button></td>
+          </tr>
+        `;
+      });
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+
+      const totalFinal = subtotalGeneral + depositGeneral;
+      document.getElementById("cartSubtotal").innerText = `$${subtotalGeneral.toLocaleString()} USD`;
+      document.getElementById("cartDeposit").innerText = `$${depositGeneral.toLocaleString()} USD`;
+      document.getElementById("cartTotal").innerText = `$${totalFinal.toLocaleString()} USD`;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function fillDefaultDemoData() {
+      document.getElementById("clientName").value = "Angelis Trejo Gonzalez";
+      document.getElementById("clientId").value = "001-1234547-7";
+      document.getElementById("clientLicense").value = "DO-8874125-VIP (Vigente)";
+      document.getElementById("clientPhone").value = "+1 (809) 555-0199";
+      document.getElementById("clientEmail").value = "angelistarea@luxurymotors.com";
+      document.getElementById("clientAddress").value = "Av. Anacaona #105, Torre Bella Vista, Santo Domingo, D.N.";
+      document.getElementById("cardNum").value = "4532 8901 2345 8899";
+      document.getElementById("cardExp").value = "12/28";
+      document.getElementById("cardCvv").value = "789";
+    }
+
+    function processCheckoutAndPdf() {
+      if(cart.length === 0) {
+        Swal.fire('Carrito Vacío', 'Agregue al menos un vehículo o moto antes de procesar el pago.', 'warning');
+        return;
+      }
+      
+      const clientName = document.getElementById("clientName").value;
+      const clientId = document.getElementById("clientId").value;
+      if(!clientName || !clientId) {
+        Swal.fire('Datos Incompletos', 'Por favor complete o cargue los datos del cliente.', 'warning');
+        return;
+      }
+
+      // Cerrar modal y limpiar backdrops para evitar congelamiento
+      const modalEl = document.getElementById("cartModal");
+      const modalInstance = bootstrap.Modal.getInstance(modalEl);
+      if(modalInstance) modalInstance.hide();
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.classList.remove('modal-open');
+      document.body.style.removeProperty('padding-right');
+      document.body.style.removeProperty('overflow');
+
+      Swal.fire({
+        title: 'Procesando Transacción Cifrada...',
+        html: 'Validando pasarela bancaria y generando documentación legal oficial...',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => { Swal.showLoading(); },
+        background: '#0d121c',
+        color: '#fff'
+      }).then(() => {
+        generateOfficialPdf();
+      });
+    }
+
+    function generateOfficialPdf() {
+      const clientName = document.getElementById("clientName").value;
+      const clientId = document.getElementById("clientId").value;
+      const clientPhone = document.getElementById("clientPhone").value;
+      const clientEmail = document.getElementById("clientEmail").value;
+      const clientAddress = document.getElementById("clientAddress").value;
+
+      const hasVenta = cart.some(i => i.tipoItem === 'VENTA');
+      const hasAlquiler = cart.some(i => i.tipoItem === 'ALQUILER');
+
+      let docTitle = "FACTURA DE VENTA Y CONTRATO DE ALQUILER";
+      let docFilename = "factura_y_contrato_LME-" + Math.floor(100000 + Math.random() * 900000) + ".pdf";
+
+      if(hasVenta && !hasAlquiler) {
+        docTitle = "FACTURA DE VENTA";
+        docFilename = "factura_de_venta_LME-" + Math.floor(100000 + Math.random() * 900000) + ".pdf";
+      } else if(!hasVenta && hasAlquiler) {
+        docTitle = "CONTRATO DE ALQUILER Y ACUERDO DE RESPONSABILIDAD";
+        docFilename = "contrato_de_alquiler_LME-" + Math.floor(100000 + Math.random() * 900000) + ".pdf";
+      }
+
+      let subtotalGen = 0;
+      let depositGen = 0;
+
+      let rowsHtml = "";
+      cart.forEach((item, idx) => {
+        subtotalGen += item.subtotal;
+        depositGen += item.depositoFianza || 0;
+        let detalle = item.tipoItem === 'VENTA' ? 'Adquisición Vehicular Definitiva' : `Alquiler: ${item.duracion} ${item.modalidad} (Desde ${item.fechaInicio})`;
+        let badgeColor = item.tipoItem === 'VENTA' ? '#2e7d32' : '#0284c7';
+        rowsHtml += `
+          <tr>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: center; color: #333333 !important;">${idx + 1}</td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: center;"><img src="${item.imagen}" style="width: 55px; height: 35px; object-fit: cover; border-radius: 4px;"></td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; color: #111111 !important; font-weight: bold;">${item.marca} ${item.modelo}<br><span style="font-size: 8.5px; color: #555555 !important;">Cód: ${item.codigo}</span></td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: center;"><span style="background: ${badgeColor}; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 8.5px;">${item.tipoItem}</span></td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; color: #333333 !important; font-size: 9px;">${detalle}</td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: right; color: #333333 !important;">$${item.precioUnitario.toLocaleString()}</td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: center; color: #333333 !important;">1</td>
+            <td style="padding: 6px; border-bottom: 1px solid #ddd; text-align: right; color: #111111 !important; font-weight: bold;">$${item.subtotal.toLocaleString()}</td>
+          </tr>
+        `;
+      });
+
+      let clausesHtml = "";
+      if(hasAlquiler) {
+        clausesHtml = `
+          <div style="margin-top: 15px; padding: 10px 14px; background: #fafafa !important; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 9.5px; color: #333333 !important; line-height: 1.45;">
+            <h5 style="margin: 0 0 6px 0; font-size: 10.5px; font-weight: bold; color: #111111 !important; text-transform: uppercase;">
+              Acuerdo de Responsabilidad y Términos de Alquiler:
+            </h5>
+            <p style="margin: 0 0 4px 0; color: #333333 !important;"><strong style="color: #111111 !important;">1. Custodia del Bien:</strong> El arrendatario se compromete a operar la unidad bajo las leyes de tránsito vigentes, no exceder los límites de velocidad y mantener el vehículo en óptimas condiciones mecánicas y estéticas.</p>
+            <p style="margin: 0 0 4px 0; color: #333333 !important;"><strong style="color: #111111 !important;">2. Cobertura & Deducible:</strong> La unidad cuenta con póliza de seguro completa con deducible del 10% en caso de colisión comprobada. Daños por negligencia, ingesta de alcohol o sustancias ilícitas son de responsabilidad exclusiva del arrendatario.</p>
+            <p style="margin: 0 0 4px 0; color: #333333 !important;"><strong style="color: #111111 !important;">3. Política de Combustible:</strong> La unidad se entrega con tanque lleno y debe ser devuelta en las mismas condiciones. De lo contrario, se aplicará el cargo estándar de reposición.</p>
+          </div>
+
+          <table style="width: 100%; margin-top: 30px; font-size: 10px; text-align: center;" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 45%; vertical-align: top;">
+                <div style="border-top: 1px solid #333; padding-top: 6px; margin: 0 20px;">
+                  <strong style="color: #111111 !important;">LUXURY MOTORS ELITE CORP.</strong><br>
+                  <span style="font-size: 9px; color: #555555 !important;">Firma Autorizada / Angelis Trejo</span>
+                </div>
+              </td>
+              <td style="width: 10%;"></td>
+              <td style="width: 45%; vertical-align: top;">
+                <div style="border-top: 1px solid #333; padding-top: 6px; margin: 0 20px;">
+                  <strong style="color: #111111 !important;">${clientName}</strong><br>
+                  <span style="font-size: 9px; color: #555555 !important;">Doc ID: ${clientId} (Cliente / Arrendatario)</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        `;
+      } else {
+        clausesHtml = `
+          <div style="margin-top: 20px; padding: 10px; background: #fdfdfd; border-left: 3px solid #2e7d32; font-size: 9.5px; color: #333333 !important;">
+            <strong style="color: #111111 !important;">Garantía de Satisfacción:</strong> Unidad vendida con garantía certificada de 3 años o 60,000 km, traspaso legal garantizado y asistencia vial 24/7 de cortesía durante el primer año.
+          </div>
+          <table style="width: 100%; margin-top: 35px; font-size: 10px; text-align: center;" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 45%; vertical-align: top;">
+                <div style="border-top: 1px solid #333; padding-top: 6px; margin: 0 20px;">
+                  <strong style="color: #111111 !important;">LUXURY MOTORS ELITE CORP.</strong><br>
+                  <span style="font-size: 9px; color: #555555 !important;">Firma Autorizada / Angelis Trejo</span>
+                </div>
+              </td>
+              <td style="width: 10%;"></td>
+              <td style="width: 45%; vertical-align: top;">
+                <div style="border-top: 1px solid #333; padding-top: 6px; margin: 0 20px;">
+                  <strong style="color: #111111 !important;">${clientName}</strong><br>
+                  <span style="font-size: 9px; color: #555555 !important;">Doc ID: ${clientId} (Comprador)</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        `;
+      }
+
+      const totalFinal = subtotalGen + depositGen;
+
+      const htmlContent = `
+        <div style="background: #ffffff !important; color: #333333 !important; padding: 25px; font-family: Helvetica, Arial, sans-serif; font-size: 11px;">
+          <!-- Cabecera -->
+          <div style="text-align: center; border-bottom: 2px solid #111111; padding-bottom: 12px; margin-bottom: 15px;">
+            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #111111 !important; letter-spacing: 1.5px;">LUXURY MOTORS ELITE CORP.</h2>
+            <p style="margin: 3px 0; font-size: 9px; color: #555555 !important;">Av. Anacaona #105, Torre Empresarial Elite, Piso 14 | Tel: +1 (809) 555-ELITE | info@luxurymotors.com</p>
+            <div style="display: inline-block; background: #111111; color: #ffffff; font-size: 11px; font-weight: bold; padding: 3px 14px; border-radius: 4px; margin-top: 8px;">
+              ${docTitle}
+            </div>
+          </div>
+
+          <!-- Metadatos -->
+          <table style="width: 100%; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 8px; margin-bottom: 15px;" cellpadding="6" cellspacing="0">
+            <tr>
+              <td style="width: 50%; vertical-align: top;">
+                <strong style="color: #111111 !important; font-size: 10px;">DATOS DEL CLIENTE:</strong><br>
+                Nombre: ${clientName}<br>
+                Identificación: ${clientId}<br>
+                Teléfono: ${clientPhone}<br>
+                Email: ${clientEmail}<br>
+                Dirección: ${clientAddress}
+              </td>
+              <td style="width: 50%; vertical-align: top;">
+                <strong style="color: #111111 !important; font-size: 10px;">DETALLES DE LA TRANSACCIÓN:</strong><br>
+                No. Documento: LME-${Math.floor(100000 + Math.random() * 900000)}<br>
+                Fecha & Hora: ${new Date().toLocaleString()}<br>
+                Método de Pago: Tarjeta de Crédito Simulada (VIP)<br>
+                Estado: <span style="color: #2e7d32; font-weight: bold;">Procesado & Confirmado</span><br>
+                Agente Emisor: Angelis Trejo
+              </td>
+            </tr>
+          </table>
+
+          <!-- Tabla de Productos -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;" cellpadding="0" cellspacing="0">
+            <thead>
+              <tr style="background: #111111; color: #ffffff; font-size: 9.5px;">
+                <th style="padding: 6px; text-align: center; width: 4%;">#</th>
+                <th style="padding: 6px; text-align: center; width: 12%;">Foto</th>
+                <th style="padding: 6px; text-align: left; width: 26%;">Vehículo / Modelo</th>
+                <th style="padding: 6px; text-align: center; width: 11%;">Tipo</th>
+                <th style="padding: 6px; text-align: left; width: 22%;">Detalle</th>
+                <th style="padding: 6px; text-align: right; width: 10%;">Precio</th>
+                <th style="padding: 6px; text-align: center; width: 5%;">Cant.</th>
+                <th style="padding: 6px; text-align: right; width: 10%;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+
+          <!-- Totales -->
+          <table style="width: 100%; margin-bottom: 15px;" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 60%; vertical-align: top; font-size: 9px; color: #777777 !important;">
+                * Este documento constituye una certificación legal y comercial de los servicios y compras pactadas con Luxury Motors Elite Corp. Todo vehículo cuenta con inspección técnica certificada de 150 puntos.
+              </td>
+              <td style="width: 40%; vertical-align: top;">
+                <table style="width: 100%; font-size: 10px;" cellpadding="3" cellspacing="0">
+                  <tr>
+                    <td style="text-align: right; color: #555555 !important;">Subtotal Bruto:</td>
+                    <td style="text-align: right; font-weight: bold; color: #111111 !important;">$${subtotalGen.toLocaleString()} USD</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; color: #555555 !important;">Depósito Fianza Reembolsable:</td>
+                    <td style="text-align: right; font-weight: bold; color: #111111 !important;">$${depositGen.toLocaleString()} USD</td>
+                  </tr>
+                  <tr style="border-top: 2px solid #111111;">
+                    <td style="text-align: right; font-weight: bold; color: #111111 !important; font-size: 12px;">TOTAL GENERAL:</td>
+                    <td style="text-align: right; font-weight: 800; color: #111111 !important; font-size: 12px;">$${totalFinal.toLocaleString()} USD</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          ${clausesHtml}
+
+          <!-- Pie de página PDF -->
+          <div style="margin-top: 25px; border-top: 1px dashed #cccccc; padding-top: 8px; text-align: center; font-size: 8.5px; color: #888888 !important;">
+            Documento generado automáticamente por el Sistema E-Commerce & Alquiler de Vehículos Premium | Arquitectura por Angelis Trejo
+          </div>
+        </div>
+      `;
+
+      const opt = {
+        margin: [8, 8, 8, 8],
+        filename: docFilename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, scrollY: 0, scrollX: 0, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      setTimeout(() => {
+        html2pdf().set(opt).from(htmlContent).save().then(() => {
+          cart = [];
+          updateCartBadge();
+          Swal.fire({
+            icon: 'success',
+            title: '¡Documento PDF Generado con Éxito!',
+            text: 'Su factura o contrato se ha descargado correctamente.',
+            background: '#0d121c',
+            color: '#fff'
+          });
+        });
+      }, 350);
+    }
+  </script>
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
